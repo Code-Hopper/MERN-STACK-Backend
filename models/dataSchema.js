@@ -3,20 +3,21 @@ import mongoose, { model } from "mongoose";
 let dataSchema = mongoose.Schema({
     name: String,
     phone: String,
+    email: String,
     city: String,
     pincode:Number,
     age: Number,
     address: String,
-    dob: String
+    dob: String,
+    timeStamp: String
 })
 
-// pre , post
+// pre and post
 
-dataSchema.pre("save",function(){
-    // timestamp
-    console.log("called before saving the data !")
+dataSchema.pre("save",function (){
+    this.timeStamp = `${new Date().toLocaleDateString()} | ${new Date().toLocaleTimeString()}`
 })
 
-let DataModel = new model("data", dataSchema)
+let DataModel = new model("datas", dataSchema)
 
 export { DataModel }

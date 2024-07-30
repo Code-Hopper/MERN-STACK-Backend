@@ -28,18 +28,6 @@ app.use(bodyParser.json())
 
 app.use(ApiRouter)
 
-// fn1()
-
-// let fn1 = () =>{
-//     console.log("hello")
-// }
-
-fn1()
-
-function fn1 () {
-    console.log("hii")
-}
-
 app.listen(port, () => {
     console.log(`server is running on port ${port}`)
 })
