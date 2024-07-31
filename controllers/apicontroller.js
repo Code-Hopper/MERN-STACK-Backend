@@ -54,16 +54,21 @@ let PostAcceptForm = async (req, res) => {
     }
 }
 
-let FetchData = async () => {
+let FetchData = async (req,res) => {
+
+    console.log("called fetch data !")
+
     try {
         // fetch un conditional data from database
         let result = await DataModel.find()
 
+        console.log(result)
+
         res.status(200).json({ message: "Got Data From Database !", database: result })
 
     } catch (err) {
-
+        res.status(200).json({ message: "unable to get data !", err })
     }
 }
 
-export { GetHome, PostAcceptForm }
+export { GetHome, PostAcceptForm, FetchData }
