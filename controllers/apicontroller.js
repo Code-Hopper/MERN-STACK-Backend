@@ -1,4 +1,5 @@
 import { DataModel } from "../models/dataSchema.js"
+import {ObjectId } from "mongodb"
 
 let GetHome = async (req, res) => {
     try {
@@ -54,7 +55,7 @@ let PostAcceptForm = async (req, res) => {
     }
 }
 
-let FetchData = async (req,res) => {
+let FetchData = async (req, res) => {
 
     console.log("called fetch data !")
 
@@ -64,6 +65,10 @@ let FetchData = async (req,res) => {
 
         console.log(result)
 
+        if (result.length == 0) {
+            throw ("unable to get data !")
+        }
+
         res.status(200).json({ message: "Got Data From Database !", database: result })
 
     } catch (err) {
@@ -71,4 +76,25 @@ let FetchData = async (req,res) => {
     }
 }
 
-export { GetHome, PostAcceptForm, FetchData }
+let DeleteData = async (req, res) => {
+    try {
+
+        let deleteId = req.params.id
+
+        console.log(deleteId)
+
+        if (!deleteId) {
+            throw ("delete id not found !")
+        }
+
+        await DataModel.deleteOne({ _id: new ObjectId(deleteId) })
+
+        res.status(200).json({ message: "successfully delete data !" })
+
+    } catch (err) {
+        console.log("unable to delete data", err)
+        res.status(101).json({ message: "unable to delete data !", err })
+    }
+}
+
+export { GetHome, PostAcceptForm, FetchData, DeleteData }
